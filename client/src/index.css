@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #08080c;
+    color: #f0f0f5;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgba(255, 69, 0, 0.3);
+    color: #f0f0f5;
+  }
+}
+
+@layer components {
+  .btn-roast {
+    @apply relative inline-flex items-center gap-2 px-6 py-3 font-semibold text-white rounded-xl
+           bg-roast-accent transition-all duration-200 select-none cursor-pointer
+           hover:bg-roast-accent-hover hover:scale-[1.02] active:scale-[0.98]
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-roast-accent focus-visible:ring-offset-2 focus-visible:ring-offset-roast-bg;
+    box-shadow: 0 0 20px rgba(255, 69, 0, 0.25), 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .btn-roast:hover {
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.45), 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .input-repo {
+    @apply w-full bg-roast-surface border border-roast-border rounded-xl px-4 py-3
+           text-roast-text placeholder-roast-muted font-mono text-sm
+           transition-all duration-200 outline-none
+           focus:border-roast-accent focus:ring-1 focus:ring-roast-accent/40;
+  }
+
+  .stat-card {
+    @apply flex flex-col items-center gap-1 px-5 py-3 rounded-xl
+           bg-roast-surface border border-roast-border text-center;
+  }
+
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .glow-accent {
+    filter: drop-shadow(0 0 8px rgba(255, 69, 0, 0.6));
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #ff4500, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #1e1e2a transparent;
+  }
+}
