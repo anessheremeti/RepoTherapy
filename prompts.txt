@@ -1,0 +1,82 @@
+Claude Code prompts used to build RepoTherapy
+(in order of use — see README.md for full context)
+
+---
+
+1. Initial build / fix roast button / wire up AI
+"act as the best software developer in the world, this app is about entering a
+github repo and then roasting it when i press roast it nothing happens, so fix
+that make it dynamic. AI should analyze the profile and give: roast, strengths,
+developer archetype, funny scorecards, survival tips. Rules: 1) must be all
+dynamic data 2) no hardcode data 3) implement it with best practices"
+
+---
+
+2. Switch input from repo to GitHub username
+"Detyr e ai osht qe kur e shkruan duhet me shkru profilin jo emrin e repos"
+(translation: the task of ai is that when you enter it you should enter the
+profile not the repo name)
+
+---
+
+3. Loading states with personality
+"after the user submits the form it should show: Scanning README delusion
+levels... and also loading states with best practices"
+
+---
+
+4. Fix double-fetch on navigation
+"once i click roast and once its redirecting me to the profile its like waiting
+for 1 or 2 milliseconds and then refetching again, fix this problem with best
+practices — analyse code"
+
+---
+
+5. Change AI response structure
+"Return STRICT JSON: { developerType, roastHeadline, roast, strengths[],
+redFlags[], careerAdvice, scores: { commitDiscipline, tutorialAddiction,
+bugSummoning } }"
+
+---
+
+6. Redesign scorecard UI
+"implement the Roast scorecards with best practices. Rules: 1) must be best
+practices for ui/ux 2) dynamic data 3) keep it simple, not complicated"
+
+---
+
+7. Roast style selector (Friendly / Corporate / Brutal)
+"Add a roast style selector that allows users to choose between three distinct
+roast modes before generating their GitHub roast: Friendly, Corporate, Brutal.
+The selected roast style must significantly influence the tone, wording, jokes,
+and overall personality of the generated roast."
+
+---
+
+8. Share button
+"also add a button at the roast screen that allows me as a user to share the
+roast with others who are not using the web, implement this with the best
+practices as a software developer, dont make it complicated keep it simple"
+
+---
+
+9. Share bug report
+"the issue is still there the content should be the same after i press share
+because when i paste into the url the app is generating another roast fix this
+issue"
+
+---
+
+10. Production-grade sharing architecture
+"Act as a senior software architect. Design and implement a robust sharing
+architecture so that shared links always display the exact same generated roast
+content that was originally created. Ensure the solution works across different
+browsers, devices, and user sessions. Follow modern software engineering
+principles: scalability, maintainability, security, performance optimization,
+clean architecture, separation of concerns."
+
+---
+
+11. README + prompts + thoughtful touch
+"continue implementing: Clear README, the Claude Code prompts you used pasted
+in the README, one thoughtful touch, honest commit history."

@@ -65,6 +65,7 @@ export default function RoastView() {
     user, repos, topLanguages,
     developerType, roastHeadline, roast,
     strengths, redFlags, careerAdvice, scores, style,
+    createdAt,
   } = data
 
   const styleInfo = STYLES.find(s => s.id === style) ?? STYLES[2]
@@ -73,6 +74,9 @@ export default function RoastView() {
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5)
     .map(([lang]) => lang)
+
+  // createdAt is only present on DB-loaded roasts (shared links), not same-session nav
+  const isSharedView = Boolean(createdAt)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -100,6 +104,19 @@ export default function RoastView() {
           @{user.login}
         </a>
       </header>
+
+      {isSharedView && (
+        <div className="flex items-center justify-center gap-2 px-4 py-2
+                        bg-roast-surface border-b border-roast-border/50
+                        text-xs text-roast-muted">
+          <span>🔗</span>
+          <span>
+            Shared roast · generated{' '}
+            <span className="text-roast-dim">{timeAgo(createdAt)}</span>
+            {' '}· this is the original, not a regeneration
+          </span>
+        </div>
+      )}
 
       <main className="flex-1 w-full max-w-3xl mx-auto px-4 py-10 space-y-6 animate-fade-in">
 
@@ -243,6 +260,17 @@ export default function RoastView() {
           <p className="text-roast-dim text-sm leading-relaxed">{careerAdvice}</p>
         </div>
 
+        {/* CTA */}
+        <div className="flex flex-col items-center gap-3 pt-4 pb-2">
+          <p className="text-roast-muted text-xs">Seen enough? There are more victims out there.</p>
+          <button
+            onClick={() => navigate('/')}
+            className="btn-roast"
+          >
+            Roast Someone Else →
+          </button>
+        </div>
+
       </main>
 
       <footer className="px-6 py-4 border-t border-roast-border/50 text-center text-xs text-roast-muted">
@@ -287,6 +315,15 @@ function ScoreCard({ name, icon, score, inverted, animated }) {
   )
 }
 
+function timeAgo(ms) {
+  const s = Math.floor((Date.now() - ms) / 1000)
+  if (s < 60) return 'just now'
+  if (s < 3600) return `${Math.floor(s / 60)}m ago`
+  if (s < 86400) return `${Math.floor(s / 3600)}h ago`
+  if (s < 86400 * 30) return `${Math.floor(s / 86400)}d ago`
+  return new Date(ms).toLocaleDateString()
+}
+
 function SpinnerScreen() {
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -304,13 +341,20 @@ function SpinnerScreen() {
 }
 
 function ErrorScreen({ error, onBack }) {
+  const isNotFound = error?.toLowerCase().includes('not found')
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-4 text-center">
-      <div className="text-5xl">💀</div>
-      <h2 className="text-xl font-bold text-roast-text">Something Went Wrong</h2>
-      <p className="text-roast-muted text-sm max-w-sm">{error}</p>
+      <div className="text-5xl">{isNotFound ? '🕳️' : '💀'}</div>
+      <h2 className="text-xl font-bold text-roast-text">
+        {isNotFound ? 'Roast Not Found' : 'Something Went Wrong'}
+      </h2>
+      <p className="text-roast-muted text-sm max-w-sm">
+        {isNotFound
+          ? 'This roast link is expired or invalid. Roasts live for 1 hour.'
+          : error}
+      </p>
       <button onClick={onBack} className="mt-4 btn-roast">
-        Try Again
+        {isNotFound ? 'Roast Someone Fresh' : 'Try Again'}
       </button>
     </div>
   )
