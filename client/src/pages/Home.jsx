@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ProfileInput from '../components/ProfileInput'
 import FeatureBadges from '../components/FeatureBadge'
+import RoastStyleSelector from '../components/RoastStyleSelector'
 
 const TAGLINES = [
   "We'll read every commit. Every. Single. One.",
@@ -13,11 +14,12 @@ const TAGLINES = [
 export default function Home() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+  const [style, setStyle] = useState('brutal')
   const [tagline] = useState(() => TAGLINES[Math.floor(Math.random() * TAGLINES.length)])
 
   function handleSubmit(username) {
     setLoading(true)
-    navigate(`/results/${username}`)
+    navigate(`/results/${username}?style=${style}`)
   }
 
   return (
@@ -64,7 +66,10 @@ export default function Home() {
           {tagline}
         </p>
 
-        <ProfileInput onSubmit={handleSubmit} loading={loading} />
+        <div className="w-full max-w-xl flex flex-col gap-5">
+          <RoastStyleSelector selected={style} onChange={setStyle} />
+          <ProfileInput onSubmit={handleSubmit} loading={loading} />
+        </div>
 
         <div className="mt-14 mb-6 flex items-center gap-4 w-full max-w-xs">
           <div className="flex-1 h-px bg-roast-border" />

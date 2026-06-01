@@ -4,11 +4,14 @@ import { generateRoast } from '../services/ai.js'
 
 const router = Router()
 
+const VALID_STYLES = ['friendly', 'corporate', 'brutal']
+
 router.get('/:username', async (req, res) => {
   const { username } = req.params
+  const style = VALID_STYLES.includes(req.query.style) ? req.query.style : 'brutal'
   try {
     const profileData = await fetchProfileData(username)
-    const roastData = await generateRoast(profileData)
+    const roastData = await generateRoast(profileData, style)
     res.json({
       user: profileData.user,
       repos: profileData.repos,
